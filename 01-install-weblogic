@@ -1,0 +1,49 @@
+######################Weblogic Installation scripting######################
+
+#!/bin/bash
+echo "weblogic 14c installation "
+
+# Variables
+sourceipaddress=ip # need to add soure ip 
+
+if [ -f /usr/java8_64/bin ]; then
+        echo "java is installed"
+        mkdir -p /oracle/Softwares
+        cd /oracle/Softwares
+
+        ######################## Checking Responsive File ########################
+        echo "Creating WLS Responsive file"
+        if [ -f /oracle/Softwares/wls.rsp ]; then
+                echo "file exit"
+        else
+                echo "file not exist, Copying from existing server"
+                scp -Opr weblogic@$sourceipaddress:/oracle/Softwares/wls.rsp /oracle/Softwares
+        fi
+
+        ######################## Checking Ora Inst File ###########################
+        echo "Creating LOC file"
+        if [ -f /oracle/Softwares/oraInst.loc ]; then
+                echo "file exist"
+        else
+                echo "file not exist, Copying from existing server"
+                scp -Opr weblogic@$sourceipaddress:/oracle/Softwares/oraInst.loc /oracle/Softwares
+        fi
+
+        ######################## Checking Weblogic Binary File ####################
+        echo "Checking WebLogic Binary"
+        if [ -f /oracle/Softwares/fmw_14.1.1.0.0_wls.jar ]; then
+                echo "file exist"
+        else
+                echo "file not exist, Copying from existing server"
+                scp -Opr weblogic@$sourceipaddress:/oracle/Softwares/fmw_14.1.1.0.0_wls.jar /oracle/Softwares
+        fi
+
+        ######################## Installation Starts from here File ################
+        echo "installation process starts"
+        java -jar fmw_14.1.1.0.0_wls.jar -silent -responseFile /oracle/Softwares/wls.rsp -invPtrLoc /oracle/Softwares/oraInst.loc
+
+        echo "installation successfully completed"
+else
+        echo "java is not installed, Kindly install java for further installation steps"
+fi
+###############################################################################

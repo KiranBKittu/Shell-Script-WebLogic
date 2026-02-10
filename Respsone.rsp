@@ -1,0 +1,16 @@
+# Response File Version
+VERSION=1.0.0.0.0
+
+[ENGINE]
+
+# Middleware (Oracle Home) location
+ORACLE_HOME=/oracle/middleware
+
+# WebLogic install type
+INSTALL_TYPE=WebLogic Server
+
+# Auto update settings
+DECLINE_AUTO_UPDATES=true
+
+# Security updates
+SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
